@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "catnotcatdetector"
+version = "0.1.0"
+description = "This module can differ cat and dogs"
+authors = ["None"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.11.4"
+matplotlib = "^3.8.0"
+tqdm = "^4.66.1"
+wget = "^3.2"
+scikit-learn = "^1.3.1"
+numpy = "^1.21.4"
+torch = "^2.1.0"
+torchvision = "^0.16.0"
+
+
+[[tool.poetry.source]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/cu111"
+priority = "explicit"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
