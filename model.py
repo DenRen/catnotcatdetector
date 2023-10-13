@@ -31,6 +31,9 @@ class Runner:
         self._top_val_accuracy = -1
         self.log_dict = {"train": [], "val": [], "test": []}
 
+        if model is not None:
+            model = model.to(self.device)
+
     def _set_events(self):
         """
         Additional method to initialize variables, which may store logging and
@@ -158,8 +161,6 @@ class Runner:
                 Overwrites self.opt.
             **kwargs: additional parameters to pass to self.validate.
         """
-        self.opt = opt or self.opt
-        self.model = model or self.model
 
         for _epoch in range(n_epochs):
             start_time = time.time()
@@ -388,7 +389,6 @@ class ModelWrapper:
     def evaluate_model(self):
         hp = self.hp
         model = torch.load(open(hp.model_file_name, "rb"))
-        model.eval()
         print(f"Model {hp.model_file_name} is loaded")
 
         runner = CNNRunner(model, None, self.device, hp.model_file_name)
