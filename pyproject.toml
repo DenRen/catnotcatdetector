@@ -37,6 +37,7 @@ lines_after_imports = 2
 [tool.nbqa.config]
 black = "pyproject.toml"
 isort = "pyproject.toml"
+flake8 = "setup.cfg"
 
 [tool.nbqa.addopts]
 flake8 = ["--extend-ignore=E402"]
