@@ -26,6 +26,25 @@ priority = "explicit"
 pre-commit = "^3.4.0"
 pytest = "^7.4.2"
 
+[tool.back]
+line-length = 88
+
+[tool.isort]
+profile = "black"
+line_length = 88
+lines_after_imports = 2
+
+[tool.nbqa.config]
+black = "pyproject.toml"
+isort = "pyproject.toml"
+
+[tool.nbqa.addopts]
+flake8 = ["--extend-ignore=E402"]
+
+[tool.nbqa.mutate]
+black = 1
+isort = 1
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
