@@ -1,4 +1,4 @@
-from model import infer
+from src.model import infer
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-from model import train
+from src.model import train
 
 
 if __name__ == "__main__":
