@@ -2,6 +2,7 @@ import time
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
+from shutil import unpack_archive
 
 import numpy as np
 import torch
@@ -12,6 +13,7 @@ from matplotlib import pyplot as plt
 from sklearn.metrics import accuracy_score, f1_score
 from torchvision import transforms
 from tqdm.auto import tqdm
+from wget import download
 
 
 class Runner:
@@ -316,6 +318,21 @@ class HyperParams:
     image_std = [0.229, 0.224, 0.225]
     embedding_size: int = 128
     model_file_name: str = "model.ckpt"
+
+
+def download_data():
+    data_dir = HyperParams().data_path
+    zip_name = "data.zip"
+    zip_path = data_dir / zip_name
+
+    if not zip_path.exists():
+        file_link = f"https://www.dropbox.com/s/gqdo90vhli893e0/{zip_name}"
+        # Make dropbox file link downloadable
+        file_link += "?dl=1"
+
+        download(file_link, str(zip_path))
+
+    unpack_archive(zip_path, data_dir)
 
 
 def get_torch_device() -> torch.device:

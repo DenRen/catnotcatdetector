@@ -1,5 +1,4 @@
 __pycache__
-data
 data.zip
 model.ckpt
 validate_res.csv
