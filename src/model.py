@@ -1,13 +1,13 @@
 from dataclasses import dataclass
 from pathlib import Path
 from shutil import unpack_archive
-from warnings import deprecated
+# from warnings import deprecated
 
 import torch
 import torch.nn as nn
 import torchvision
 from torchvision import transforms
-from wget import download
+# from wget import download
 
 from .runner import CNNRunner
 
@@ -27,7 +27,7 @@ class HyperParams:
     model_path: str = data_dir / "model.ckpt"
 
 
-@deprecated
+# @deprecated
 def download_data():
     data_dir = HyperParams().data_dir
     zip_name = "data.zip"
