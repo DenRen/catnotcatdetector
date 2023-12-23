@@ -11,6 +11,7 @@
     - [x] environment.yml
     - [ ] virtual-packages.yml
     - [x] conda-linux-64.lock
+  - [ ] Добавить поддержку `GPU`
   - [ ] Set env. variable [PYTHONNOUSERSIT][link_pythonnousersit] to `True`
   - [ ] Разобраться с `black`, `isort`, `flake8` и при необходимости их добавить (возможно они будут конфликтовать, с этим нужно разобраться и оставить только стабильные вещи)
   - [ ] добавить `pre-commit`
@@ -21,6 +22,8 @@
   - [ ] Добавить экспорт модели в `onnx` и запускать инференс через неё
 - [ ] **III**-ий этап: `Triron`
   - [ ] [`TODO`][link_todo]
+- [ ] **IV**-ый этап: `OS`
+  - [ ] Сделать совместимость проекта с `Windows`
 
 ### Задачи на эстетику
 - [ ] Посмотреть [лучшие](https://github.com/matiassingers/awesome-readme) `readme.md` и перенять полезные идеи
