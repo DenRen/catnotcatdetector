@@ -1,3 +1,23 @@
+## Как использовать
+
+### Первый запуск \[Linux\]
+Предполагается, что у вас уже установлена [`conda`][link_miniconda_install].
+
+В первый раз после скачивания нужно создать `nenv` и установить в него все пакеты:
+```bash
+conda create --name cat_env --file conda-linux-64.lock
+conda activate cat_env
+poetry install
+```
+
+### Использование
+Подключите созданный на первом шаге `venv`
+```bash
+conda activate cat_env
+```
+
+## Задачи
+
 ### CV задачи
 - [ ] Реализовать обучение через `pytorch lightning`
 - [ ] Сделать систему буквально запускаемой от одной кнопки
@@ -30,6 +50,7 @@
 - [ ] Добавить `emoji`
 - [ ] Добавить список используемых технологий и его поддерживать
 
+[link_miniconda_install]: https://docs.conda.io/projects/conda/en/latest/user-guide/install/linux.html
 
 [link_conda_env]: https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#activating-an-environment
 [link_poetry]: https://python-poetry.org/docs/#installing-with-the-official-installer
