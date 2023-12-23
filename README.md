@@ -37,7 +37,7 @@ conda activate cat_env
 
 ### MLOps задачи
 
-- [ ] **I** этап: чистый код, `venv` и `pre-commit` \
+- [x] **I** этап: чистый код, `venv` и `pre-commit` \
   - [x] Объединить работу [`conda`][link_conda_env] и [`poetry`][link_poetry]
         как в [этом][link_conda_poetry_together] примере \
   - [x] Добавить файлы:
@@ -46,7 +46,7 @@ conda activate cat_env
           2\]][link_conda_lock_2]
     - [x] conda-linux-64.lock
   - [x] Добавить поддержку `GPU`
-  - [ ] Set env. variable [PYTHONNOUSERSIT][link_pythonnousersit] to `True`
+  - [x] Set env. variable [PYTHONNOUSERSIT][link_pythonnousersit] to `True`
   - [x] Разобраться с `black`, `isort`, `flake8`, `bandit`, `nbQA`,
         `mirrors-prettier` и при необходимости их добавить в `pre-commit`
         (возможно они будут конфликтовать, с этим нужно разобраться и оставить

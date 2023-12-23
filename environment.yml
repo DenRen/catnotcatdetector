@@ -19,3 +19,6 @@ dependencies:
 # Non-standard section listing target platforms for conda-lock:
 platforms:
   - linux-64
+
+variables:
+  PYTHONNOUSERSIT: "True"
