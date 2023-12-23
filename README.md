@@ -8,10 +8,10 @@
 - [ ] **I** этап: чистый код, `venv` и `pre-commit` \
   - [x] Объединить работу [`conda`][link_conda_env] и [`poetry`][link_poetry] как в [этом][link_conda_poetry_together] примере \
   - [x] Добавить файлы:
-    - [x] environment.yml
-    - [ ] virtual-packages.yml
+    - [x] environment.yml [\[link\]][link_conda_env]
+    - [x] virtual-packages.yml [\[link 1, ][link_conda_lock_1] [link 2\]][link_conda_lock_2]
     - [x] conda-linux-64.lock
-  - [ ] Добавить поддержку `GPU`
+  - [x] Добавить поддержку `GPU`
   - [ ] Set env. variable [PYTHONNOUSERSIT][link_pythonnousersit] to `True`
   - [ ] Разобраться с `black`, `isort`, `flake8` и при необходимости их добавить (возможно они будут конфликтовать, с этим нужно разобраться и оставить только стабильные вещи)
   - [ ] добавить `pre-commit`
@@ -36,3 +36,6 @@
 [link_pythonnousersit]: https://docs.python.org/3/using/cmdline.html#envvar-PYTHONNOUSERSITE
 [link_conda_poetry_together]: https://stackoverflow.com/questions/70851048/does-it-make-sense-to-use-conda-poetry
 [link_todo]: https://en.wikipedia.org/wiki/Comment_(computer_programming)#Tags
+
+[link_conda_lock_1]: https://github.com/conda/conda-lock
+[link_conda_lock_2]: https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-virtual.html
