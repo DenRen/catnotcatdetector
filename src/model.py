@@ -1,13 +1,11 @@
 from dataclasses import dataclass
 from pathlib import Path
 from shutil import unpack_archive
-# from warnings import deprecated
 
 import torch
 import torch.nn as nn
 import torchvision
 from torchvision import transforms
-# from wget import download
 
 from .runner import CNNRunner
 
@@ -38,7 +36,7 @@ def download_data():
         # Make dropbox file link downloadable
         file_link += "?dl=1"
 
-        download(file_link, str(zip_path))
+        # download(file_link, str(zip_path))
 
     unpack_archive(zip_path, data_dir)
 

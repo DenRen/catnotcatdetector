@@ -10,7 +10,7 @@ channels:
 dependencies:
   - python=3.10.13
   - mamba
-  - pip  # pip must be mentioned explicitly, or conda-lock will fail
+  - pip # pip must be mentioned explicitly, or conda-lock will fail
   - poetry=1.6.1
   - pytorch::pytorch=2.1.0
   - pytorch::pytorch-cuda=12.1
