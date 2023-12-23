@@ -53,7 +53,15 @@ conda activate cat_env
         только стабильные вещи)
   - [x] добавить `pre-commit`
 - [ ] **II**-ой этап: `dvc`, `hydra`, `logging` и `onnx`
-  - [ ] Установить DVC через подгрузку с дисков (не git lfs)
+  - [ ] Установить [DVC][link_dvc_get_started] через подгрузку с дисков (не git
+        lfs)
+    - [ ] Внедрить эффективное хранение большого количества маленьких фото
+      - [Пример][link_dvc_zip_or_array] из жизни: как компания столкнуласть с
+        долгим скачаиванием большого количества файлов и выбирала между `zip` и
+        `parquet`
+      - High performance
+        [`parquet-cpp`][https://habr.com/ru/companies/otus/articles/503132/]
+    - [ ] Добавить хранение моделей после обучения
   - [ ] Перенести гиперпараметры в yaml конфиги hydra
   - [ ] Добавить логирование обучения (после устновки `pytorch lighning`)
   - [ ] Добавить экспорт модели в `onnx` и запускать инференс через неё
@@ -85,3 +93,8 @@ conda activate cat_env
 [link_conda_lock_2]:
   https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-virtual.html
 [link_habr_sphinx]: https://habr.com/ru/companies/otus/articles/713992/
+[link_dvc_get_started]:
+  https://dvc.org/doc/start/data-management/data-versioning
+[link_dvc_zip_or_array]:
+  https://fizzylogic.nl/2023/01/13/did-you-know-dvc-doesn-t-handle-large-datasets-neither-did-we-and-here-s-how-we-fixed-it
+[link_parquet_cpp_habr]: https://habr.com/ru/companies/otus/articles/503132/
