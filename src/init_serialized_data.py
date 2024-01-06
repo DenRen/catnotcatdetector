@@ -64,7 +64,7 @@ def serialize_row_data(row_data_dir, ser_data_dir, check_serialization: bool = T
 def init_serialized_data():
     row_data_dir = "row_data"
     serialized_data_dir = "serialized_data"
-    check_serialization = True
+    check_serialization = False
 
     download_row_imgs(row_data_dir)
     serialize_row_data(row_data_dir, serialized_data_dir, check_serialization)
