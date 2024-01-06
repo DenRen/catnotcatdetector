@@ -61,6 +61,7 @@ conda activate cat_env
         `parquet`
       - High performance
         [`parquet-cpp`][https://habr.com/ru/companies/otus/articles/503132/]
+    - [ ] Добавить тесты для системы хранения фото
     - [ ] Добавить хранение моделей после обучения
   - [ ] Перенести гиперпараметры в yaml конфиги hydra
   - [ ] Добавить логирование обучения (после устновки `pytorch lighning`)
@@ -98,3 +99,9 @@ conda activate cat_env
 [link_dvc_zip_or_array]:
   https://fizzylogic.nl/2023/01/13/did-you-know-dvc-doesn-t-handle-large-datasets-neither-did-we-and-here-s-how-we-fixed-it
 [link_parquet_cpp_habr]: https://habr.com/ru/companies/otus/articles/503132/
+
+### Как скачать и сериализовать сырые картинки
+
+```bash
+python3 src/init_serialized_data.py
+```
