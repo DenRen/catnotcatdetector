@@ -9,8 +9,7 @@
 
 Предполагается, что у вас уже установлена [`conda`][link_miniconda_install].
 
-В первый раз после скачивания нужно создать `nenv` и установить в него все
-пакеты:
+В первый раз после скачивания нужно создать `nenv` и установить в него все пакеты:
 
 ```bash
 conda create --name cat_env --file conda-linux-64.lock
@@ -38,8 +37,8 @@ conda activate cat_env
 ### MLOps задачи
 
 - [x] **I** этап: чистый код, `venv` и `pre-commit` \
-  - [x] Объединить работу [`conda`][link_conda_env] и [`poetry`][link_poetry]
-        как в [этом][link_conda_poetry_together] примере \
+  - [x] Объединить работу [`conda`][link_conda_env] и [`poetry`][link_poetry] как в
+        [этом][link_conda_poetry_together] примере \
   - [x] Добавить файлы:
     - [x] environment.yml [\[link\]][link_conda_env]
     - [x] virtual-packages.yml [\[link 1, ][link_conda_lock_1] [link
@@ -47,18 +46,15 @@ conda activate cat_env
     - [x] conda-linux-64.lock
   - [x] Добавить поддержку `GPU`
   - [x] Set env. variable [PYTHONNOUSERSIT][link_pythonnousersit] to `True`
-  - [x] Разобраться с `black`, `isort`, `flake8`, `bandit`, `nbQA`,
-        `mirrors-prettier` и при необходимости их добавить в `pre-commit`
-        (возможно они будут конфликтовать, с этим нужно разобраться и оставить
-        только стабильные вещи)
+  - [x] Разобраться с `black`, `isort`, `flake8`, `bandit`, `nbQA`, `mirrors-prettier` и
+        при необходимости их добавить в `pre-commit` (возможно они будут конфликтовать,
+        с этим нужно разобраться и оставить только стабильные вещи)
   - [x] добавить `pre-commit`
 - [ ] **II**-ой этап: `dvc`, `hydra`, `logging` и `onnx`
-  - [x] Установить [DVC][link_dvc_get_started] через подгрузку с дисков (не git
-        lfs)
+  - [x] Установить [DVC][link_dvc_get_started] через подгрузку с дисков (не git lfs)
     - [x] Внедрить эффективное хранение большого количества маленьких фото
-      - [Пример][link_dvc_zip_or_array] из жизни: как компания столкнуласть с
-        долгим скачаиванием большого количества файлов и выбирала между `zip` и
-        `parquet`
+      - [Пример][link_dvc_zip_or_array] из жизни: как компания столкнуласть с долгим
+        скачаиванием большого количества файлов и выбирала между `zip` и `parquet`
       - High performance
         [`parquet-cpp`][https://habr.com/ru/companies/otus/articles/503132/]
     - [x] Добавить тесты для системы хранения фото
@@ -74,8 +70,8 @@ conda activate cat_env
 
 ### Задачи на эстетику
 
-- [ ] Посмотреть [лучшие](https://github.com/matiassingers/awesome-readme)
-      `readme.md` и перенять полезные идеи
+- [ ] Посмотреть [лучшие](https://github.com/matiassingers/awesome-readme) `readme.md` и
+      перенять полезные идеи
 - [ ] Добавить `emoji`
 - [ ] Добавить список используемых технологий и его поддерживать
 
@@ -83,8 +79,7 @@ conda activate cat_env
   https://docs.conda.io/projects/conda/en/latest/user-guide/install/linux.html
 [link_conda_env]:
   https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#activating-an-environment
-[link_poetry]:
-  https://python-poetry.org/docs/#installing-with-the-official-installer
+[link_poetry]: https://python-poetry.org/docs/#installing-with-the-official-installer
 [link_pythonnousersit]:
   https://docs.python.org/3/using/cmdline.html#envvar-PYTHONNOUSERSITE
 [link_conda_poetry_together]:
@@ -94,8 +89,7 @@ conda activate cat_env
 [link_conda_lock_2]:
   https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-virtual.html
 [link_habr_sphinx]: https://habr.com/ru/companies/otus/articles/713992/
-[link_dvc_get_started]:
-  https://dvc.org/doc/start/data-management/data-versioning
+[link_dvc_get_started]: https://dvc.org/doc/start/data-management/data-versioning
 [link_dvc_zip_or_array]:
   https://fizzylogic.nl/2023/01/13/did-you-know-dvc-doesn-t-handle-large-datasets-neither-did-we-and-here-s-how-we-fixed-it
 [link_parquet_cpp_habr]: https://habr.com/ru/companies/otus/articles/503132/

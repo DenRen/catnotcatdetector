@@ -83,5 +83,5 @@ repos:
       - id: prettier
         types_or: [markdown, yaml, toml, json, dockerfile, shell]
         args:
-          - --print-width=80
+          - --print-width=88
           - --prose-wrap=always
