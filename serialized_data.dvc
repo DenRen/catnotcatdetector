@@ -1,0 +1,6 @@
+outs:
+- md5: 06ed79b0f92a840ae221bc2e163afb73.dir
+  size: 692624516
+  nfiles: 12
+  hash: md5
+  path: serialized_data

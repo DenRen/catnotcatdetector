@@ -2,3 +2,4 @@ __pycache__
 data.zip
 model.ckpt
 validate_res.csv
+/serialized_data

@@ -1,4 +1,6 @@
 [core]
-    remote = storage
-['remote "storage"']
-    url = gdrive://1M3QZoDgWpbOKk2H4CgXIte_D09TiICIq
+    analytics = false
+    remote = gdriveremote
+['remote "gdriveremote"']
+    url = gdrive://1p-xvURS4Ir04_Mbx5d5faHO-7cEB7mvu
+    gdrive_acknowledge_abuse = false
