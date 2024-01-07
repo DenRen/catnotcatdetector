@@ -9,7 +9,8 @@
 
 Предполагается, что у вас уже установлена [`conda`][link_miniconda_install].
 
-В первый раз после скачивания нужно создать `nenv` и установить в него все пакеты:
+В первый раз после скачивания нужно создать `virtual environment (venv)` и установить в
+него все пакеты:
 
 ```bash
 conda create --name cat_env --file conda-linux-64.lock
@@ -55,8 +56,7 @@ conda activate cat_env
     - [x] Внедрить эффективное хранение большого количества маленьких фото
       - [Пример][link_dvc_zip_or_array] из жизни: как компания столкнуласть с долгим
         скачаиванием большого количества файлов и выбирала между `zip` и `parquet`
-      - High performance
-        [`parquet-cpp`][https://habr.com/ru/companies/otus/articles/503132/]
+      - High performance [`parquet-cpp`][link_parquet_cpp_habr]
     - [x] Добавить тесты для системы хранения фото
     - [ ] Добавить хранение моделей после обучения
   - [ ] Переписать обучение модели через `pytorch lighning`
@@ -68,6 +68,7 @@ conda activate cat_env
 - [ ] **IV**-ый этап: `OS`
   - [ ] Сделать совместимость проекта с `Windows`
   - [ ] Добавить [Sphinx][link_habr_sphinx]
+  - [ ] Подключить аугаментацию через `DALI`
 
 ### Задачи на эстетику
 
