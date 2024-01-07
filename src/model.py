@@ -1,5 +1,7 @@
+import shutil
 from dataclasses import dataclass
 from os import listdir
+from os.path import dirname
 from pathlib import Path
 from typing import Any
 
@@ -9,6 +11,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torchmetrics
 import torchvision
+from lightning.pytorch.callbacks import ModelCheckpoint
 from lightning.pytorch.loggers import CSVLogger
 from lightning.pytorch.utilities.types import STEP_OUTPUT, OptimizerLRScheduler
 from torch.utils.data import DataLoader
@@ -24,12 +27,12 @@ class HyperParams:
     size_h: int = 96
     size_w: int = 96
     num_classes: int = 2
-    epoch_num: int = 2
+    epoch_num: int = 10
     batch_size: int = 256
     image_mean = [0.485, 0.456, 0.406]
     image_std = [0.229, 0.224, 0.225]
     embedding_size: int = 128
-    model_path: str = data_dir / "model.ckpt"
+    model_path: Path = "models" / Path("model.ckpt")
 
 
 class CatDogModel(nn.Module):
@@ -52,6 +55,7 @@ class CatDogModel(nn.Module):
 class CatDogTrainingModule(pl.LightningModule):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
+        self.save_hyperparameters()
 
         self.model = CatDogModel()
         self.loss = nn.CrossEntropyLoss()
@@ -151,30 +155,59 @@ def get_csv_logger():
     return CSVLogger("logs")
 
 
+def make_parent_dir(path) -> None:
+    model_dir = Path(dirname(path))
+    if not model_dir.exists():
+        model_dir.mkdir(parents=True, exist_ok=True)
+
+
 def train():
     hp = HyperParams()
+
+    checkpoint_callback = ModelCheckpoint(
+        monitor="val_loss",
+        # dirpath='my/path/',
+        filename="model-{epoch:02d}-{val_loss:.2f}",
+        save_top_k=3,
+        mode="min",
+    )
+
     trainer = pl.Trainer(
         max_epochs=hp.epoch_num,
         log_every_n_steps=1,
         num_sanity_val_steps=3,
         logger=get_csv_logger(),
+        callbacks=[checkpoint_callback],
     )
     training_module = CatDogTrainingModule()
     train_dl, val_dl = get_dls(hp)
 
     trainer.fit(training_module, train_dl, val_dl)
 
+    make_parent_dir(hp.model_path)
+    shutil.copyfile(checkpoint_callback.best_model_path, hp.model_path)
+
 
 def infer():
+    hp = HyperParams()
     trainer = pl.Trainer(
         logger=get_csv_logger(),
+        enable_checkpointing=False,
     )
     training_module = CatDogTrainingModule()
-    test_dl = get_dls(HyperParams(), is_test=True)
+    test_dl = get_dls(hp, is_test=True)
 
-    pl_log_dir = Path("logs") / "lightning_logs"
-    last_version_path = pl_log_dir / sorted(listdir(pl_log_dir))[-1]
-    chekpoints_dir = last_version_path / "checkpoints"
-    chekpoint_path = chekpoints_dir / listdir(chekpoints_dir)[0]
+    if hp.model_path.exists():
+        print(f"Model {hp.model_path!r} found")
+        chekpoint_path = hp.model_path
+    else:
+        print(
+            f"Model {hp.model_path.absolute()} not found, trying to get last model from logs"
+        )
+        pl_log_dir = Path("logs") / "lightning_logs"
+        last_version_path = pl_log_dir / sorted(listdir(pl_log_dir))[-1]
+        chekpoints_dir = last_version_path / "checkpoints"
+        chekpoint_path = chekpoints_dir / listdir(chekpoints_dir)[0]
+        print(f"Found {chekpoint_path.absolute()} model!")
 
     trainer.test(training_module, test_dl, ckpt_path=chekpoint_path)
