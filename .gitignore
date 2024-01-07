@@ -4,3 +4,4 @@ model.ckpt
 validate_res.csv
 /serialized_data
 lightning_logs
+outputs

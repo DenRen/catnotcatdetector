@@ -1,0 +1,15 @@
+data:
+  path: serialized_data
+  size_h: 96
+  size_w: 96
+
+model:
+  backbone: resnet18
+  backbone_weights: IMAGENET1K_V1
+  best_model_paht: models/model.ckpt
+
+training:
+  batch_size: 256
+  epochs: 2
+  learning_rate: 1e-3
+  save_top_k: 1
