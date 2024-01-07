@@ -1,15 +1,12 @@
-import os
 from dataclasses import dataclass
-from os.path import join
 from pathlib import Path
-from shutil import unpack_archive
 
 import torch
 import torch.nn as nn
 import torchvision
 from torchvision import transforms
 
-from .datautils import ContinuousImageArray
+from .dataset import DatasetSerializedTwoClassImages
 from .runner import CNNRunner
 
 
@@ -28,66 +25,8 @@ class HyperParams:
     model_path: str = data_dir / "model.ckpt"
 
 
-# @deprecated
-def download_data():
-    data_dir = HyperParams().data_dir
-    zip_name = "data.zip"
-    zip_path = data_dir / zip_name
-
-    if not zip_path.exists():
-        file_link = f"https://www.dropbox.com/s/gqdo90vhli893e0/{zip_name}"
-        # Make dropbox file link downloadable
-        file_link += "?dl=1"
-
-        # download(file_link, str(zip_path))
-
-    unpack_archive(zip_path, data_dir)
-
-
 def get_torch_device() -> torch.device:
     return torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-
-
-# Dataset special for cats and dogs
-class DatasetSerializedImages(torchvision.datasets.VisionDataset):
-    def __init__(
-        self,
-        root_dir: str,
-        transform: None,
-        num_classes: int = 2,
-    ) -> None:
-        def two_class_exc(true_cond: bool = False) -> None:
-            if not true_cond:
-                raise NotImplementedError("DatasetSerializedImages only for 2 class")
-
-        two_class_exc(num_classes == 2)
-        super().__init__(root_dir, transform=transform)
-
-        class_names = sorted(os.listdir(root_dir))
-        two_class_exc(len(class_names) == 2)
-
-        self.datasets = []
-        for class_name in class_names:
-            class_path = join(root_dir, class_name)
-            img_arr_path = join(class_path, f"{class_name}_bin")
-            pos_arr_path = join(class_path, f"{class_name}_pos.npy")
-            cia = ContinuousImageArray(img_arr_path, pos_arr_path)
-            self.datasets.append(cia)
-
-        self.size_first_class = len(self.datasets[0])
-
-    def __getitem__(self, idx: int):
-        ds_idx = int(idx >= self.size_first_class)
-        idx -= ds_idx * self.size_first_class
-
-        img = self.datasets[ds_idx][idx].copy()
-        if self.transform is not None:
-            img = self.transform(img)
-
-        return img, ds_idx
-
-    def __len__(self) -> int:
-        return self.size_first_class + len(self.datasets[1])
 
 
 class ModelWrapper:
@@ -107,18 +46,10 @@ class ModelWrapper:
     def train(self):
         hp = self.hp
 
-        # load dataset using torchvision.datasets.ImageFolder
-        # train_dataset = torchvision.datasets.ImageFolder(
-        #     hp.data_dir / "train_11k", transform=self.transformer
-        # )
-        # test_dataset = torchvision.datasets.ImageFolder(
-        #     hp.data_dir / "test_labeled", transform=self.transformer
-        # )
-
-        train_dataset = DatasetSerializedImages(
+        train_dataset = DatasetSerializedTwoClassImages(
             hp.data_dir / "train_11k", self.transformer
         )
-        test_dataset = DatasetSerializedImages(
+        test_dataset = DatasetSerializedTwoClassImages(
             hp.data_dir / "test_labeled", self.transformer
         )
 
@@ -169,7 +100,7 @@ class ModelWrapper:
         runner = CNNRunner(model, None, self.device, hp.model_path)
 
         # load test data also, to be used for final evaluation
-        val_dataset = DatasetSerializedImages(
+        val_dataset = DatasetSerializedTwoClassImages(
             hp.data_dir / "val", transform=self.transformer
         )
         val_batch_gen = torch.utils.data.DataLoader(
