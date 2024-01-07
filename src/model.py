@@ -1,6 +1,5 @@
 import shutil
 from dataclasses import dataclass
-from os import listdir
 from os.path import dirname
 from pathlib import Path
 from typing import Any
@@ -156,9 +155,8 @@ def get_csv_logger():
 
 
 def make_parent_dir(path) -> None:
-    model_dir = Path(dirname(path))
-    if not model_dir.exists():
-        model_dir.mkdir(parents=True, exist_ok=True)
+    dir_path = Path(dirname(path))
+    dir_path.mkdir(parents=True, exist_ok=True)
 
 
 def train():
@@ -166,7 +164,6 @@ def train():
 
     checkpoint_callback = ModelCheckpoint(
         monitor="val_loss",
-        # dirpath='my/path/',
         filename="model-{epoch:02d}-{val_loss:.2f}",
         save_top_k=3,
         mode="min",
@@ -193,21 +190,14 @@ def infer():
     trainer = pl.Trainer(
         logger=get_csv_logger(),
         enable_checkpointing=False,
+        log_every_n_steps=1,
     )
     training_module = CatDogTrainingModule()
     test_dl = get_dls(hp, is_test=True)
 
-    if hp.model_path.exists():
-        print(f"Model {hp.model_path!r} found")
-        chekpoint_path = hp.model_path
-    else:
-        print(
+    if not hp.model_path.exists():
+        raise RuntimeError(
             f"Model {hp.model_path.absolute()} not found, trying to get last model from logs"
         )
-        pl_log_dir = Path("logs") / "lightning_logs"
-        last_version_path = pl_log_dir / sorted(listdir(pl_log_dir))[-1]
-        chekpoints_dir = last_version_path / "checkpoints"
-        chekpoint_path = chekpoints_dir / listdir(chekpoints_dir)[0]
-        print(f"Found {chekpoint_path.absolute()} model!")
 
-    trainer.test(training_module, test_dl, ckpt_path=chekpoint_path)
+    trainer.test(training_module, test_dl, ckpt_path=hp.model_path)
