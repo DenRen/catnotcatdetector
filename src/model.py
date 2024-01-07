@@ -155,6 +155,26 @@ def make_parent_dir(path) -> None:
     parent_dir.mkdir(parents=True, exist_ok=True)
 
 
+def export_resnet_to_onnx(trained_model_path, onnx_model_path):
+    module = CatDogTrainingModule.load_from_checkpoint(trained_model_path)
+    model = module.model
+    model.eval()
+
+    dummy_input = torch.randn(1, 3, 224, 224).to("cuda")
+
+    torch.onnx.export(
+        model,
+        dummy_input,
+        onnx_model_path,
+        export_params=True,
+        opset_version=15,
+        do_constant_folding=True,
+        input_names=["IMAGES"],
+        output_names=["CLASS_PROBS"],
+        dynamic_axes={"IMAGES": {0: "BATCH_SIZE"}, "CLASS_PROBS": {0: "BATCH_SIZE"}},
+    )
+
+
 def train(config: HyperParams):
     checkpoint_callback = ModelCheckpoint(
         monitor="val_loss",
@@ -178,6 +198,9 @@ def train(config: HyperParams):
     model_path = Path(config.model.best_model_paht)
     make_parent_dir(model_path)
     shutil.copyfile(checkpoint_callback.best_model_path, model_path)
+
+    onnx_model_path = model_path.parent / (str(model_path.stem) + ".onnx")
+    export_resnet_to_onnx(checkpoint_callback.best_model_path, onnx_model_path)
 
 
 def infer(config: HyperParams):
