@@ -1,13 +1,9 @@
-import hydra
-from hydra.core.config_store import ConfigStore
+from git import Repo
 
-from .config import Params
-from .model import infer
-
-config_store = ConfigStore.instance()
-config_store.store(name="params", node=Params)
+from .model import HyperParams, infer, train
 
 
-@hydra.main(config_path="conf", config_name="config", version_base="1.3.2")
-def main_infer(config: Params) -> None:
-    infer(config)
+def run_train_or_infer(is_train: bool, config: HyperParams) -> None:
+    repo = Repo(search_parent_directories=False)
+    config.git_commit_id = repo.head.object.hexsha
+    train(config) if is_train else infer(config)

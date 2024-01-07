@@ -10,6 +10,8 @@ model:
 
 training:
   batch_size: 256
-  epochs: 2
+  epochs: 10
   learning_rate: 1e-3
   save_top_k: 1
+
+git_commit_id: undef

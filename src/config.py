@@ -30,3 +30,4 @@ class Params:
     data: Data
     model: Model
     training: Training
+    git_commit_id: str

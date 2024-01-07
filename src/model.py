@@ -10,7 +10,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torchmetrics
 from lightning.pytorch.callbacks import ModelCheckpoint
-from lightning.pytorch.loggers import CSVLogger
+from lightning.pytorch.loggers import MLFlowLogger
 from lightning.pytorch.utilities.types import STEP_OUTPUT, OptimizerLRScheduler
 from torch.utils.data import DataLoader
 from torchvision import transforms
@@ -146,8 +146,8 @@ def get_dls(config: HyperParams, is_test: bool = False):
         return train_dl, val_dl
 
 
-def get_csv_logger():
-    return CSVLogger("logs")
+def get_logger():
+    return MLFlowLogger(experiment_name="logs", tracking_uri="file:./mlruns")
 
 
 def make_parent_dir(path) -> None:
@@ -167,7 +167,7 @@ def train(config: HyperParams):
         max_epochs=config.training.epochs,
         log_every_n_steps=1,
         num_sanity_val_steps=3,
-        logger=get_csv_logger(),
+        logger=get_logger(),
         callbacks=[checkpoint_callback],
     )
     training_module = CatDogTrainingModule(config)
@@ -182,7 +182,7 @@ def train(config: HyperParams):
 
 def infer(config: HyperParams):
     trainer = pl.Trainer(
-        logger=get_csv_logger(),
+        logger=get_logger(),
         enable_checkpointing=False,
         log_every_n_steps=1,
     )
